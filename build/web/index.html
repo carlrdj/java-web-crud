@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <button onclick="getUsers()">Listar usuarios</button>
+        <button onclick="getUser(1)">Detalle de usuario 1</button>
+        <button onclick="createUser()">Crear usuario</button>
+        <button onclick="updateUser()">Actualizar usuario 4</button>        
+        <button onclick="removeUser()">Eliminar usuario</button>        
+        
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+        <script>
+            function getUsers(){
+                $.ajax({
+                    url: "http://localhost:8080/servlet-demo/user",
+                    type: 'GET',
+                    success: function (data, textStatus, jqXHR) {
+                        console.log("Listado de usuarios");
+                        data.forEach(user => {
+                            console.log(user);
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error(jqXHR)
+                    }
+                });                
+            }
+            
+            function getUser(id){
+                $.ajax({
+                    url: "http://localhost:8080/servlet-demo/user/" + id,
+                    type: 'GET',
+                    success: function (data, textStatus, jqXHR) {
+                        console.log("Detalle de usuario");
+                        console.log(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error(jqXHR)
+                    }
+                });                
+            }
+            
+            function createUser(){
+                $.ajax({
+                    url: "http://localhost:8080/servlet-demo/user",
+                    data: JSON.stringify({
+                        username: Math.round(Math.random() * (1000 - 1) + 1).toString(),
+                        password: Math.round(Math.random() * (1000 - 1) + 1).toString(),
+                        rol: {
+                            id: 1
+                        }
+                    }),
+                    dataType: 'JSON',
+                    type: 'POST',
+                    success: function (data, textStatus, jqXHR) {
+                        console.log("Crear de usuario");
+                        console.log(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error(errorThrown)
+                    }
+                });                
+            }
+            
+            function updateUser(){
+                $.ajax({
+                    url: "http://localhost:8080/servlet-demo/user",
+                    data: JSON.stringify({
+                        id: 4,
+                        username: Math.round(Math.random() * (1000 - 1) + 1).toString(),
+                        password: Math.round(Math.random() * (1000 - 1) + 1).toString(),
+                        rol: {
+                            id: 1
+                        }
+                    }),
+                    dataType: 'JSON',
+                    type: 'PUT',
+                    success: function (data, textStatus, jqXHR) {
+                        console.log("Actualizar usuario");
+                        console.log(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error(errorThrown)
+                    }
+                });                
+            }
+            
+            function removeUser(){
+                $.ajax({
+                    url: "http://localhost:8080/servlet-demo/user/444,55,6",
+                    type: 'DELETE',
+                    success: function (data, textStatus, jqXHR) {
+                        console.log("Eliminar usuarios");
+                        console.log(data);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error(errorThrown)
+                    }
+                });                
+            }
+            
+        </script>
+    </body>
+</html>
